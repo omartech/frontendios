@@ -308,7 +308,9 @@ NSInteger photoCount=0;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
                 hud.labelText = @"Loading";
 
-                NSString *soapMessage = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n"
+                
+                
+               /* NSString *soapMessage = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n"
                                          "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n"
                                          "<soapenv:Body> <validateFace xmlns=\"http://services.hubino.omar.com\"> \n"
                                          "<dataSet> <ns1:data xmlns:ns1=\"http://bo.hubino.omar.com\">%@</ns1:data>\n"
@@ -322,7 +324,20 @@ NSInteger photoCount=0;
                                          "<ns6:userId xmlns:ns6=\"http://bo.hubino.omar.com\">%u</ns6:userId>\n"
                                          "</dataSet>\n"
                                          "</validateFace> \n"
-                                         "</soapenv:Body> </soapenv:Envelope>",encodedString0,userId,encodedString1,userId,encodedString2,userId];
+                                         "</soapenv:Body> </soapenv:Envelope>",encodedString0,userId,encodedString1,userId,encodedString2,userId];*/
+                NSString *soapMessage = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n"
+                                         "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n"
+                                         "<soapenv:Body> <initiateFaceEngine xmlns=\"http://services.hubino.omar.com\">\n"
+                                         "<images>%@</images>\n"
+                                         "<images>%@</images>\n"
+                                         "<images>%@</images>\n"
+                                         "<userId>%u</userId>\n"
+                                         "<serviceType>validateFace</serviceType>\n"
+                                         "</initiateFaceEngine> \n"
+                                         "</soapenv:Body> </soapenv:Envelope>",encodedString0,encodedString1,encodedString2,userId];
+
+                
+                   NSLog(@"%@==========================================",soapMessage);
                 
                 NSURL *url = [NSURL URLWithString:@"http://146.185.160.54:8080/ajmWeb/services/OmerWeb?wsdl"];
                 NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
@@ -394,7 +409,7 @@ NSInteger photoCount=0;
                 
                 
                 
-                NSString *soapMessage = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n"
+               /* NSString *soapMessage = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n"
                                          "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n"
                                          "<soapenv:Body> <prepareMetadata xmlns=\"http://services.hubino.omar.com\"> \n"
                                          "<dataSet> <ns1:data xmlns:ns1=\"http://bo.hubino.omar.com\">%@</ns1:data>\n"
@@ -414,9 +429,25 @@ NSInteger photoCount=0;
                                          "<dataSet> <ns9:data xmlns:ns9=\"http://bo.hubino.omar.com\">%@</ns9:data>\n"
                                          "<ns10:userId xmlns:ns10=\"http://bo.hubino.omar.com\">%u</ns10:userId> </dataSet>\n"
                                          "</prepareMetadata> \n"
-                                         "</soapenv:Body> </soapenv:Envelope>",encodedString0,userId,encodedString1,userId,encodedString2,userId,encodedString3,userId,encodedString4,userId];
+                                         "</soapenv:Body> </soapenv:Envelope>",encodedString0,userId,encodedString1,userId,encodedString2,userId,encodedString3,userId,encodedString4,userId];*/
                 
-                //NSLog(@"%@==========================================",soapMessage);
+                
+                NSString *soapMessage = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n"
+                                         "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n"
+                                         "<soapenv:Body> <initiateFaceEngine xmlns=\"http://services.hubino.omar.com\">\n"
+                                         "<images>%@</images>\n"
+                                         "<images>%@</images>\n"
+                                         "<images>%@</images>\n"
+                                         "<images>%@</images>\n"
+                                         "<images>%@</images>\n"
+                                         "<userId>%u</userId>\n"
+                                         "<serviceType>prepareMetadata</serviceType>\n"
+                                         "</initiateFaceEngine> \n"
+                                         "</soapenv:Body> </soapenv:Envelope>",encodedString0,encodedString1,encodedString2,encodedString3,encodedString4,userId];
+                
+                
+                
+                NSLog(@"%@==========================================",soapMessage);
                 
                 NSURL *url = [NSURL URLWithString:@"http://146.185.160.54:8080/ajmWeb/services/OmerWeb?wsdl"];
                 NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
@@ -579,14 +610,22 @@ NSInteger photoCount=0;
             [prefs setObject:message forKey:@"resultRes"];
             [prefs synchronize];
         }
-        if([message isEqualToString:@"E01"])
+       else if([message isEqualToString:@"E01"])
         {
             NSLog(@"%@ errorCode:",message);
             NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
             [prefs setObject:message forKey:@"resultRes"];
             [prefs synchronize];
         }
-        
+        else
+        {
+            NSLog(@"%@ errorCode:",message);
+            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+            [prefs setObject:message forKey:@"resultRes"];
+            [prefs synchronize];
+
+            
+        }
         recordResults = TRUE;
     }
     if( [elementName isEqualToString:@"ns2:result"])
