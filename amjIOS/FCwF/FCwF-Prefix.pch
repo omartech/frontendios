@@ -1,0 +1,21 @@
+//
+// Prefix header for all source files of the 'FCwF' target in the 'FCwF' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_4_0
+#warning "This project uses features only available in iOS SDK 4.0 and later."
+#endif
+
+#ifdef __cplusplus
+#import <OpenCV/opencv2/opencv.hpp>
+#import <OpenCV/opencv2/core/core_c.h>
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "CommonFunction.h"
+
+#endif
